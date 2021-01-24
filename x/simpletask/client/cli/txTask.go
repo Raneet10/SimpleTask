@@ -46,7 +46,7 @@ func GetCmdSetTask(cdc *codec.Codec) *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id := args[0]
 			argsName := string(args[1])
-			argsBond, err := sdk.ParseCoins(args[1])
+			argsBond, err := sdk.ParseCoins(args[2])
 			if err != nil {
 				return err
 			}
