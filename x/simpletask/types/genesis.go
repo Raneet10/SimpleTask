@@ -1,26 +1,41 @@
 package types
 
+import "fmt"
+
 // GenesisState - all simpletask state that must be provided at genesis
 type GenesisState struct {
-	// TODO: Fill out what is needed by the module for genesis
+	Tasks []Task `json:"tasks"`
 }
 
 // NewGenesisState creates a new GenesisState object
-func NewGenesisState( /* TODO: Fill out with what is needed for genesis state */ ) GenesisState {
+func NewGenesisState() GenesisState {
 	return GenesisState{
-		// TODO: Fill out according to your genesis state
+		Tasks: nil,
 	}
 }
 
 // DefaultGenesisState - default GenesisState used by Cosmos Hub
 func DefaultGenesisState() GenesisState {
 	return GenesisState{
-		// TODO: Fill out according to your genesis state, these values will be initialized but empty
+		Tasks: []Task{},
 	}
 }
 
 // ValidateGenesis validates the simpletask genesis parameters
 func ValidateGenesis(data GenesisState) error {
-	// TODO: Create a sanity check to make sure the state conforms to the modules needs
+	for _, task := range data.Tasks {
+		if task.Creator == nil {
+			return fmt.Errorf("Invalid Task : Creator missing")
+		}
+		if task.ID == "" {
+			return fmt.Errorf("Invalid Task : ID missing")
+		}
+		if task.Name == "" {
+			return fmt.Errorf("Invalid Task : Name missing")
+		}
+		if task.Bond == nil {
+			return fmt.Errorf("Invalid Task : Bond missing")
+		}
+	}
 	return nil
 }

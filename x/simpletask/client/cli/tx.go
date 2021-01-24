@@ -22,7 +22,11 @@ func GetTxCmd(cdc *codec.Codec) *cobra.Command {
 	}
 
 	simpletaskTxCmd.AddCommand(flags.PostCommands(
-    // this line is used by starport scaffolding # 1
+		// this line is used by starport scaffolding # 1
+		GetCmdCreateTask(cdc),
+		GetCmdSetTask(cdc),
+		GetCmdDeleteTask(cdc),
+		GetCmdFinishTask(cdc),
 	)...)
 
 	return simpletaskTxCmd

@@ -9,14 +9,23 @@ import (
 
 // InitGenesis initialize default parameters
 // and the keeper's address to pubkey map
-func InitGenesis(ctx sdk.Context, k keeper.Keeper /* TODO: Define what keepers the module needs */, data types.GenesisState) {
-	// TODO: Define logic for when you would like to initalize a new genesis
+func InitGenesis(ctx sdk.Context, k keeper.Keeper, data types.GenesisState) {
+	for _, task := range data.Tasks {
+		k.SetTask(ctx, task)
+	}
 }
 
 // ExportGenesis writes the current store values
 // to a genesis file, which can be imported again
 // with InitGenesis
 func ExportGenesis(ctx sdk.Context, k keeper.Keeper) (data types.GenesisState) {
-	// TODO: Define logic for exporting state
-	return types.NewGenesisState()
+	var tasks []types.Task
+	iterator := k.GetTaskIterator(ctx)
+
+	for ; iterator.Valid(); iterator.Next() {
+		key := string(iterator.Key())
+		task, _ := k.GetTask(ctx, key)
+		tasks = append(tasks, task)
+	}
+	return types.GenesisState{Tasks: tasks}
 }
