@@ -14,7 +14,7 @@ BUILD_FLAGS := -ldflags '$(ldflags)'
 all: install
 
 install: go.sum
-		@echo "--> Installing nameserviced & nameservicecli"
+		@echo "--> Installing simpletaskd & simpletaskcli"
 		@go install -mod=readonly $(BUILD_FLAGS) ./cmd/simpletaskd
 		@go install -mod=readonly $(BUILD_FLAGS) ./cmd/simpletaskcli
 
